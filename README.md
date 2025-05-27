@@ -16,27 +16,9 @@ Dans ce tutoriel, vous allez construire un petit jeu de tic-tac-toe. Ce tutoriel
 
 ---
 
-## 📌 Instructions
-
-- [x] La page doit contenir un élément `<header>` avec l’attribut `id="header"`.
-- [x] À l’intérieur du header, il doit y avoir une image avec l’attribut `id="header-img"` (un logo, par exemple).
-- [x] Le header doit également contenir un élément `<nav>` avec `id="nav-bar"`.
-- [x] Le menu de navigation doit contenir **au moins trois** éléments cliquables ayant la classe `nav-link`.
-- [x] Cliquer sur un lien de navigation `.nav-link` doit faire défiler la page vers la section correspondante.
-- [x] Un élément vidéo intégré avec `id="video"` doit être présent.
-- [x] Un formulaire `<form>` avec `id="form"` doit être inclus.
-- [x] Le formulaire doit contenir un champ `<input>` avec `id="email"` pour saisir une adresse email.
-- [x] Le champ `#email` doit avoir un texte indicatif (`placeholder`).
-- [x] Le champ `#email` doit utiliser la validation HTML5 (`type="email"`).
-- [x] Le formulaire doit inclure un bouton de soumission `<input>` avec `id="submit"`.
-- [x] Lorsque l’on soumet le formulaire, l’email doit être envoyé à l’URL fictive :  
-      `https://www.freecodecamp.com/email-submit`
-- [x] La barre de navigation doit toujours rester visible en haut de l’écran.
-- [x] La page doit contenir **au moins une** media query pour l’adaptation aux écrans.
-- [x] Le design doit utiliser **CSS Flexbox** au moins une fois.
-
 > ⚠️ **Important** : N'oublie pas d'ajouter le lien vers ta feuille de style dans le HTML :  
-> `<link rel="stylesheet" href="styles.css">` 
+> `<link rel="stylesheet" href="styles.css">`
+> `<script src="script.js"></script>`
 
 ---
 
