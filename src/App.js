@@ -61,11 +61,19 @@ export default function Game() {
   const [currentMove, setCurrentMove] = useState(0);
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
+  const [xMoves, setXMoves] = useState(0);
+  const [oMoves, setOMoves] = useState(0);
 
   function handlePlay(nextSquares) {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
+
+    if (xIsNext) {
+      setXMoves(xMoves + 1);
+    } else {
+      setOMoves(oMoves + 1);
+    }
   }
 
   function jumpTo(nextMove) {
@@ -85,7 +93,7 @@ export default function Game() {
       </li>
     );
   });
-
+  
   return (
     <div className="game">
       <div className="game-board">
@@ -94,6 +102,10 @@ export default function Game() {
       <div className="game-info">
         <ol>{moves}</ol>
       </div>
+      <div className="game-stats">
+          <p>X : {xMoves}</p>
+          <p>O : {oMoves}</p>
+        </div>
     </div>
   );
 }
