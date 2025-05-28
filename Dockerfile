@@ -1,5 +1,5 @@
 FROM node:current-alpine3.21
-WORKDIR /app
+WORKDIR /app/
 
 COPY public/ /app/public
 COPY src/ /app/src
