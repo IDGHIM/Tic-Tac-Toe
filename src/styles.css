@@ -72,8 +72,13 @@ body {
 }
 
 .square.winning {
-  background-color: #ffeeba;
-  color: darkred;
+  background-color: lightgreen;
+}
+
+.board.draw {
+  .square {
+    background: lightcoral;
+  }
 }
 
 .board-row:after {
