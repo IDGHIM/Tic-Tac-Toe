@@ -15,19 +15,23 @@ function Board({ xIsNext, squares, onPlay }) {
     }
     const nextSquares = squares.slice();
     if (xIsNext) {
-      nextSquares[i] = 'X';
+      nextSquares[i] = "X";
     } else {
-      nextSquares[i] = 'O';
+      nextSquares[i] = "O";
     }
     onPlay(nextSquares);
   }
 
-  const winner = calculateWinner(squares);
+  const result = calculateWinner(squares);
+  const winner = result?.winner;
+  const winningLine = result?.line ?? [];
+  const isDraw = !squares.includes(null) && !winner;
+
   let status;
   if (winner) {
     status = winner + ' a gagné';
   } else {
-    status = 'Prochain tour : ' + (xIsNext ? 'X' : 'O');
+    status = "Prochain tour : " + (xIsNext ? "X" : "O");
   }
 
   const rows = 3;
@@ -83,9 +87,9 @@ export default function Game() {
   const moves = history.map((squares, move) => {
     let description;
     if (move > 0) {
-      description = 'Aller au coup #' + move;
+      description = "Aller au coup #" + move;
     } else {
-      description = 'Revenir au début';
+      description = "Revenir au début";
     }
     return (
       <li key={move}>
@@ -124,7 +128,10 @@ function calculateWinner(squares) {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+      return {
+        winner: squares[a],
+        line: [a, b, c],
+      };
     }
   }
   return null;
