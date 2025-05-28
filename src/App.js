@@ -30,25 +30,29 @@ function Board({ xIsNext, squares, onPlay }) {
     status = 'Prochain tour : ' + (xIsNext ? 'X' : 'O');
   }
 
-  return (
-    <>
+  const rows = 3;
+  const cols = 3;
+  const boardRow = [];
+
+  for (let rowIndex = 0; rowIndex < rows; rowIndex++) { // Loop through each row
+    const rowSquares = []; // Create an array to hold the squares for the current row
+    
+    for (let colIndex = 0; colIndex < cols; colIndex++) { // Loop through each column
+      const squareIndex = rowIndex * cols + colIndex; // Calculate the index for the square
+      rowSquares.push(<Square value={squares[squareIndex]} onSquareClick={() => handleClick(squareIndex)} />); 
+    }
+    // Create a row of squares and add it to the rowsArray
+    boardRow.push(
+    <div className="board-row">
+      {rowSquares}
+    </div>
+  );
+  }
+  return ( 
+    <div>
       <div className="status">{status}</div>
-      <div className="board-row">
-        <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
-        <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
-        <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
-      </div>
-      <div className="board-row">
-        <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
-        <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
-        <Square value={squares[5]} onSquareClick={() => handleClick(5)} />
-      </div>
-      <div className="board-row">
-        <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
-        <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
-        <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
-      </div>
-    </>
+      {boardRow}
+    </div>
   );
 }
 
@@ -57,11 +61,19 @@ export default function Game() {
   const [currentMove, setCurrentMove] = useState(0);
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
+  const [xMoves, setXMoves] = useState(0);
+  const [oMoves, setOMoves] = useState(0);
 
   function handlePlay(nextSquares) {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
+
+    if (xIsNext) {
+      setXMoves(xMoves + 1);
+    } else {
+      setOMoves(oMoves + 1);
+    }
   }
    
     function jumpTo(nextMove) {
@@ -81,7 +93,7 @@ export default function Game() {
       </li>
     );
   });
-
+  
   return (
     <div className="game">
       <div className="game-board">
@@ -93,6 +105,10 @@ export default function Game() {
       <div className="game-restart">
         <button id="restart-btn" onClick={restartGame}>Restart</button>
       </div>
+      <div className="game-stats">
+          <p>X : {xMoves}</p>
+          <p>O : {oMoves}</p>
+        </div>
     </div>
   );
 }
