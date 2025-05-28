@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 node_modules/.bin/acorn
 node_modules/.bin/acorn.cmd
 node_modules/.bin/acorn.ps1
@@ -19996,3 +19997,6 @@ node_modules/core-js-pure/features/function/bind.js
 node_modules/core-js-pure/features/function/demethodize.js
 node_modules/core-js-pure/features/function/has-instance.js
 node_modules/core-js-pure/features/function/index.js
+=======
+node_modules
+>>>>>>> calypso

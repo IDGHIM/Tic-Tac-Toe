@@ -79,8 +79,19 @@ export default function Game() {
       <li key={move}>
         <button onClick={() => jumpTo(move)}>{description}</button>
       </li>
+
     );
   });
+  const movesHistory = history.map((squares, move) => {
+    if(move > 0){
+      return (
+        <li key={move}>Vous êtes au coup #{move}</li>
+      )
+    }
+  })
+
+  
+
 
   return (
     <div className="game">
@@ -88,7 +99,7 @@ export default function Game() {
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="game-info">
-        <ol>{moves}</ol>
+        <ol>{movesHistory}</ol> 
       </div>
     </div>
   );
