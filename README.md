@@ -42,7 +42,7 @@ Il m’a permis d’améliorer mes compétences en :
 - GitHub: [@idghim](https://github.com/idghim)  
 - freeCodeCamp: [Ichem](https://www.freecodecamp.org/IchemD)
 - Mail : [Ichem](ichemdghim@gmail.com)
-
+---
 - GitHub: [@Snoobydoo](https://github.com/Snoobydoo)
 - freeCodeCamp: [Théo](https://www.freecodecamp.org/Snoobydoo)
 - Mail: [theo_perso@live.fr](theo_perso@live.fr)
