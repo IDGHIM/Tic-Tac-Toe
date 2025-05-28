@@ -19,7 +19,8 @@ function Board({ xIsNext, squares, onPlay }) {
     } else {
       nextSquares[i] = 'O';
     }
-    onPlay(nextSquares);
+    // Passe l'index de la case jouée à onPlay
+    onPlay(nextSquares, i);
   }
 
   const winner = calculateWinner(squares);
@@ -27,7 +28,7 @@ function Board({ xIsNext, squares, onPlay }) {
   if (winner) {
     status = winner + ' a gagné';
   } else {
-    status = 'Prochain tour : ' + (xIsNext ? 'X' : 'O');
+    status = 'Prochain tour : ' + (xIsNext ? 'X' : 'O');
   }
 
   return (
@@ -53,13 +54,19 @@ function Board({ xIsNext, squares, onPlay }) {
 }
 
 export default function Game() {
-  const [history, setHistory] = useState([Array(9).fill(null)]);
+  // On stocke un objet { squares, lastMove } à chaque coup
+  const [history, setHistory] = useState([
+    { squares: Array(9).fill(null), lastMove: null }
+  ]);
   const [currentMove, setCurrentMove] = useState(0);
   const xIsNext = currentMove % 2 === 0;
-  const currentSquares = history[currentMove];
+  const currentSquares = history[currentMove].squares;
 
-  function handlePlay(nextSquares) {
-    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+  function handlePlay(nextSquares, moveIndex) {
+    const nextHistory = [
+      ...history.slice(0, currentMove + 1),
+      { squares: nextSquares, lastMove: moveIndex }
+    ];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
   }
@@ -68,10 +75,13 @@ export default function Game() {
     setCurrentMove(nextMove);
   }
 
-  const moves = history.map((squares, move) => {
+  const moves = history.map((step, move) => {
     let description;
     if (move > 0) {
-      description = 'Aller au coup #' + move;
+      // Affiche la case jouée (ligne, colonne)
+      const row = Math.floor(step.lastMove / 3) + 1;
+      const col = (step.lastMove % 3) + 1;
+      description = `Aller au coup #${move} (case : ligne ${row}, colonne ${col})`;
     } else {
       description = 'Revenir au début';
     }
@@ -85,7 +95,11 @@ export default function Game() {
   return (
     <div className="game">
       <div className="game-board">
-        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+        <Board
+          xIsNext={xIsNext}
+          squares={currentSquares}
+          onPlay={(nextSquares, moveIndex) => handlePlay(nextSquares, moveIndex)}
+        />
       </div>
       <div className="game-info">
         <ol>{moves}</ol>
