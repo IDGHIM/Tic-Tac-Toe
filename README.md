@@ -10,15 +10,17 @@
 
 Dans ce tutoriel, vous allez construire un petit jeu de tic-tac-toe. Ce tutoriel ne requiert aucune connaissance préalable de React. Les techniques que vous apprendrez dans ce tutoriel sont fondamentales pour construire n’importe quelle appli React : bien les comprendre vous donnera une compréhension profonde de React.
 
-> 💡 Inspiré de :  
-[Tuto à suivre](https://fr.react.dev/learn/tutorial-tic-tac-toe)  
-⚠️ *Ne pas copier le projet tuto.*
-
 ---
 
 > ⚠️ **Important** : N'oublie pas d'ajouter le lien vers ta feuille de style dans le HTML :  
 > `<link rel="stylesheet" href="styles.css">`
 > `<script src="script.js"></script>`
+
+---
+
+## 🛠️ Procédure d'installation
+
+
 
 ---
 
@@ -38,8 +40,8 @@ Il m’a permis d’améliorer mes compétences en :
 ## 📫 Me contacter
 
 - GitHub: [@idghim](https://github.com/idghim)  
-- freeCodeCamp: [My Profile](https://www.freecodecamp.org/IchemD)
-- Mail : [Email](ichemdghim@gmail.com)
+- freeCodeCamp: [Ichem](https://www.freecodecamp.org/IchemD)
+- Mail : [Ichem](ichemdghim@gmail.com)
 
 ---
 
