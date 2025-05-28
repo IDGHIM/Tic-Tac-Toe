@@ -63,12 +63,12 @@ export default function Game() {
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
   }
-
-  function jumpTo(nextMove) {
+   
+    function jumpTo(nextMove) {
     setCurrentMove(nextMove);
   }
 
-  const moves = history.map((squares, move) => {
+    const moves = history.map((squares, move) => {
     let description;
     if (move > 0) {
       description = 'Aller au coup #' + move;
@@ -79,9 +79,9 @@ export default function Game() {
       <li key={move}>
         <button onClick={() => jumpTo(move)}>{description}</button>
       </li>
-
     );
   });
+
   const movesHistory = history.map((squares, move) => {
     if(move > 0){
       return (
@@ -90,8 +90,10 @@ export default function Game() {
     }
   })
 
-  
-
+ function restartGame() {
+   setCurrentMove(0);
+   setHistory([Array(9).fill(null)]);
+ }
 
   return (
     <div className="game">
@@ -100,6 +102,9 @@ export default function Game() {
       </div>
       <div className="game-info">
         <ol>{movesHistory}</ol> 
+      </div>
+      <div className="game-restart">
+        <button id="restart-btn" onClick={restartGame}>Restart</button>
       </div>
     </div>
   );
