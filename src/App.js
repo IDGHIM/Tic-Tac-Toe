@@ -92,7 +92,7 @@ export default function Game() {
         <ol>{moves}</ol>
       </div>
     </div>
-    <button>Trier par ordre croissant ou décroissant</button></>
+    <button onClick={() => {} }>Trier par ordre croissant ou décroissant</button></>
   );
 }
 
