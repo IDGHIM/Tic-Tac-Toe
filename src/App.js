@@ -63,12 +63,12 @@ export default function Game() {
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
   }
-
-  function jumpTo(nextMove) {
+   
+    function jumpTo(nextMove) {
     setCurrentMove(nextMove);
   }
 
-  const moves = history.map((squares, move) => {
+    const moves = history.map((squares, move) => {
     let description;
     if (move > 0) {
       description = 'Aller au coup #' + move;
@@ -88,7 +88,10 @@ export default function Game() {
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="game-info">
-        <ol>{moves}</ol>
+        <ol>{movesHistory}</ol> 
+      </div>
+      <div className="game-restart">
+        <button id="restart-btn" onClick={restartGame}>Restart</button>
       </div>
     </div>
   );
