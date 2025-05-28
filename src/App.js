@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import './styles.css';
 
-function Square({ value, onSquareClick }) {
+function Square({ value, onSquareClick, isWinning }) {
   return (
-    <button className="square" onClick={onSquareClick}>
+    <button className={`square ${isWinning ? 'winning' : ''}`} onClick={onSquareClick}>
       {value}
     </button>
   );
@@ -26,6 +27,8 @@ function Board({ xIsNext, squares, onPlay }) {
   let status;
   if (winner) {
     status = winner + ' a gagné';
+  } else if (!squares.includes(null)) {
+    status = 'Match nul !'
   } else {
     status = 'Prochain tour : ' + (xIsNext ? 'X' : 'O');
   }
