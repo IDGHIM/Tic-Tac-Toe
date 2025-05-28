@@ -75,12 +75,12 @@ export default function Game() {
       setOMoves(oMoves + 1);
     }
   }
-   
-    function jumpTo(nextMove) {
+
+  function jumpTo(nextMove) {
     setCurrentMove(nextMove);
   }
 
-    const moves = history.map((squares, move) => {
+  const moves = history.map((squares, move) => {
     let description;
     if (move > 0) {
       description = 'Aller au coup #' + move;
@@ -100,10 +100,7 @@ export default function Game() {
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="game-info">
-        <ol>{movesHistory}</ol> 
-      </div>
-      <div className="game-restart">
-        <button id="restart-btn" onClick={restartGame}>Restart</button>
+        <ol>{moves}</ol>
       </div>
       <div className="game-stats">
           <p>X : {xMoves}</p>
