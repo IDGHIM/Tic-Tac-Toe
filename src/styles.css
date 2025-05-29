@@ -11,32 +11,13 @@
   --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --border-radius: 12px;
   --transition-speed: 0.3s;
+  --shadow-light: rgba(79, 195, 247, 0.3);
+  --shadow-medium: rgba(0, 0, 0, 0.15);
+  --shadow-strong: rgba(244, 67, 54, 0.5);
 }
 
-/* ------------------ Section Intro (Nom du jeu) ------------------ */
-.intro-section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 50vh;
-  background: var(--color-primary-light);
-  color: var(--color-primary-dark);
-  font-weight: 900;
-  font-size: 3.5rem;
-  font-family: 'Segoe UI Black', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  text-align: center;
-  border-radius: var(--border-radius);
-  margin: 2rem auto;
-  max-width: 700px;
-  box-shadow: 0 6px 20px rgba(79, 195, 247, 0.3);
-  user-select: none;
-  animation: fadeIn 1.5s ease forwards;
-}
-
-/* ------------------ Style général ------------------ */
+/* ------------------ Global Styles ------------------ */
 body {
-  background: white;
   margin: 0;
   font-family: var(--font-family);
   min-height: 100vh;
@@ -47,13 +28,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   -webkit-text-size-adjust: 100%;
+  background: #fff;
 }
 
 /* ------------------ Navbar ------------------ */
 .navbar {
   background-color: var(--color-primary);
   padding: 1rem 2rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 6px var(--shadow-medium);
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -61,9 +43,9 @@ body {
 
 .navbar ul {
   display: flex;
-  list-style: none;
   justify-content: center;
   gap: 3rem;
+  list-style: none;
   margin: 0;
   padding: 0;
 }
@@ -83,14 +65,35 @@ body {
   outline: 2px solid var(--color-accent);
 }
 
-/* ------------------ Section règles ------------------ */
+/* ------------------ Intro Section ------------------ */
+.intro-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  font-weight: 900;
+  font-size: 3.5rem;
+  font-family: 'Segoe UI Black', var(--font-family);
+  text-align: center;
+  border-radius: var(--border-radius);
+  margin: 2rem auto;
+  max-width: 700px;
+  box-shadow: 0 6px 20px var(--shadow-light);
+  user-select: none;
+  animation: fadeIn 1.5s ease forwards;
+}
+
+/* ------------------ Rules Section ------------------ */
 .rules-section {
   max-width: 800px;
   margin: 2rem auto;
   padding: 1.5rem 2rem;
   background-color: var(--color-primary-light);
   border-radius: var(--border-radius);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px var(--shadow-medium);
   line-height: 1.6;
   font-size: 1.1rem;
   color: var(--color-text-secondary);
@@ -110,36 +113,35 @@ body {
   margin: 0;
 }
 
-/* ------------------ Conteneur principal ------------------ */
+/* ------------------ Game Container ------------------ */
 .game-container {
   max-width: 1100px;
   margin: 2rem auto 4rem auto;
-  padding: 20px;
+  padding: 2rem 2rem 3rem;
   background-color: #f9f9f9;
   flex-grow: 1;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 10px var(--shadow-medium);
   border-radius: var(--border-radius);
-  padding-bottom: 3rem;
 }
 
-/* ------------------ Disposition en 3 colonnes ------------------ */
+/* ------------------ Game Layout ------------------ */
 .game-layout {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 2rem;
-  row-gap: 2rem;
+  flex-wrap: wrap;
   width: 100%;
   box-sizing: border-box;
-  flex-wrap: wrap;
+  row-gap: 2rem;
 }
 
-/* ------------------ Plateau de jeu (gauche) ------------------ */
+/* ------------------ Game Board ------------------ */
 .game-board {
   background-color: var(--color-primary);
   padding: 2rem;
   border-radius: 20px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 12px var(--shadow-medium);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -148,24 +150,25 @@ body {
   min-width: 280px;
 }
 
-/* Statut du jeu */
+/* Game Status */
 .status {
   font-size: 1.3rem;
   margin-bottom: 1.25rem;
   text-align: center;
   font-weight: 700;
   color: var(--color-primary-dark);
+  user-select: none;
 }
 
-/* Ligne du plateau */
+/* Board Rows */
 .board-row {
   display: flex;
   justify-content: center;
 }
 
-/* Case du plateau */
+/* Squares */
 .square {
-  background: white;
+  background: #fff;
   border: 2px solid #000;
   font-size: 2.2rem;
   font-weight: 700;
@@ -176,15 +179,18 @@ body {
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
-  transition: background var(--transition-speed) ease, transform 0.2s ease, box-shadow 0.3s ease;
   border-radius: 8px;
   user-select: none;
   box-shadow: 0 0 0 transparent;
+  transition:
+    background var(--transition-speed) ease,
+    transform 0.2s ease,
+    box-shadow 0.3s ease;
 }
 
 .square:hover:not(.draw) {
-  transform: scale(1.1);
   background: var(--color-primary-light);
+  transform: scale(1.1);
   box-shadow: 0 4px 8px rgba(79, 195, 247, 0.5);
 }
 
@@ -201,7 +207,7 @@ body {
   box-shadow: none;
 }
 
-/* Bouton restart */
+/* ------------------ Restart Button ------------------ */
 #restart-btn {
   margin-top: 2rem;
   background-color: var(--color-error);
@@ -212,8 +218,10 @@ body {
   font-size: 1.1rem;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 5px 10px rgba(244, 67, 54, 0.5);
-  transition: background var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+  box-shadow: 0 5px 10px var(--shadow-strong);
+  transition:
+    background var(--transition-speed) ease,
+    box-shadow var(--transition-speed) ease;
 }
 
 #restart-btn:hover,
@@ -224,7 +232,7 @@ body {
   box-shadow: 0 7px 15px rgba(211, 47, 47, 0.7);
 }
 
-/* ------------------ Score au centre ------------------ */
+/* ------------------ Score Center ------------------ */
 .score-center {
   display: flex;
   flex-direction: column;
@@ -252,7 +260,16 @@ body {
   transform: scale(1.05);
 }
 
-/* Bouton emoji pour tri */
+/* ------------------ Game Info / History ------------------ */
+.game-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  flex: 0 0 auto;
+  min-width: 200px;
+}
+
 .game-info button {
   background: transparent;
   border: none;
@@ -271,22 +288,12 @@ body {
   outline: 2px solid var(--color-accent);
 }
 
-/* ------------------ Historique des coups (droite) - affichage complet sans scroll ------------------ */
-.game-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  flex: 0 0 auto;
-  min-width: 200px;
-}
-
 ol {
   list-style: none;
   padding: 1rem;
   background-color: #ffeb3b;
   border-radius: 14px;
-  box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 10px var(--shadow-medium);
   width: 100%;
   font-weight: 700;
   display: flex;
@@ -311,66 +318,152 @@ ol li {
 
 ol li p {
   margin: 0;
-  font-size: 15px;
+  font-size: 1rem;
+  user-select: none;
 }
 
-/* Boutons dans la liste */
+/* Buttons inside the move list */
 ol button {
   background: transparent;
   border: 2px solid #333;
-  border-radius: 12px;
+  border-radius: var(--border-radius);
   padding: 0.5rem 1rem;
-  font-size: 1.3rem; /* taille égale au statut */
+  font-size: 1.3rem; /* same size as .status */
   cursor: pointer;
   transition: all var(--transition-speed) ease;
   width: 100%;
   user-select: none;
 }
 
-
 ol button:hover,
 ol button:focus-visible {
   background-color: var(--color-accent);
   border-color: var(--color-accent);
-  color: white;
+  color: #fff;
   outline-offset: 3px;
   outline: 2px solid var(--color-accent);
 }
 
-/* ------------------ Footer ------------------ */
-footer {
-  background-color: var(--color-primary);
-  color: white;
-  padding: 1rem 2rem;
-  text-align: center;
-  border-radius: 0 0 var(--border-radius) var(--border-radius);
+/* Paragraph for current move */
+ol li p {
+  font-size: 1.15rem;
   font-weight: 700;
-  box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
+  user-select: none;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
 }
 
 /* ------------------ Animations ------------------ */
 @keyframes fadeIn {
-  0% {
+  from {
     opacity: 0;
-    transform: translateY(15px);
+    transform: translateY(20px);
   }
-  100% {
+  to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-/* ------------------ Responsive ------------------ */
-@media (max-width: 900px) {
-  .game-layout {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .game-board,
-  .score-center,
-  .game-info {
-    width: 100%;
-    max-width: 500px;
-  }
+/* ------------------ Footer complet ------------------ */
+footer {
+  background-color: var(--color-primary-dark);
+  color: #fff;
+  padding: 2rem 2rem;
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+  box-shadow: 0 -3px 15px rgba(0, 0, 0, 0.3);
+  user-select: none;
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: auto;
+  text-align: center; /* Centrer le contenu */
 }
+
+footer .footer-container {
+  display: flex;
+  justify-content: center; /* Changement : centré au lieu de space-between */
+  flex-wrap: wrap;
+  max-width: 1100px;
+  margin: 0 auto;
+  gap: 2rem;
+}
+
+footer .footer-section {
+  flex: 1 1 200px;
+  min-width: 180px;
+}
+
+footer h3 {
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--color-accent);
+}
+
+footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+footer ul li {
+  margin-bottom: 0.8rem;
+}
+
+footer ul li a {
+  color: #fff;
+  text-decoration: none;
+  transition: color var(--transition-speed) ease;
+}
+
+footer ul li a:hover,
+footer ul li a:focus-visible {
+  color: var(--color-accent);
+  outline-offset: 3px;
+  outline: 2px solid var(--color-accent);
+  text-decoration: underline;
+}
+
+/* Social icons container - centré */
+footer .social-icons {
+  display: flex;
+  justify-content: center; /* Centrage horizontal */
+  flex-wrap: wrap;         /* Retour à la ligne si besoin */
+  gap: 1.5rem;
+  margin-top: 2rem;        /* Espace au-dessus des icônes */
+}
+
+footer .social-icons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: #fff;
+  transition: color var(--transition-speed) ease;
+}
+
+footer .social-icons a:hover,
+footer .social-icons a:focus-visible {
+  color: var(--color-accent);
+  outline-offset: 3px;
+  outline: 2px solid var(--color-accent);
+}
+
+/* SVG icons size */
+footer .social-icons svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+/* Bottom copyright */
+footer .footer-bottom {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+
