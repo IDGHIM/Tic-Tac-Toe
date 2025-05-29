@@ -23,52 +23,33 @@ function Board({ xIsNext, squares, onPlay }) {
 
   const winningLine = calculateWinner(squares);
   const winner = winningLine ? squares[winningLine[0]] : null;
-
-  // Détecter match nul : pas de gagnant et toutes les cases remplies
   const isDraw = !winner && squares.every(square => square !== null);
 
   const status = winner
     ? `${winner} a gagné`
     : isDraw
-      ? "Match nul !"
-      : `Prochain tour : ${xIsNext ? 'X' : 'O'}`;
+    ? "Match nul !"
+    : `Prochain tour : ${xIsNext ? 'X' : 'O'}`;
 
   return (
     <>
       <div className="status">{status}</div>
-      <div className="board-row">
-        {[0, 1, 2].map(i => (
-          <Square
-            key={i}
-            value={squares[i]}
-            onSquareClick={() => handleClick(i)}
-            highlight={winningLine && winningLine.includes(i)}
-            draw={isDraw}
-          />
-        ))}
-      </div>
-      <div className="board-row">
-        {[3, 4, 5].map(i => (
-          <Square
-            key={i}
-            value={squares[i]}
-            onSquareClick={() => handleClick(i)}
-            highlight={winningLine && winningLine.includes(i)}
-            draw={isDraw}
-          />
-        ))}
-      </div>
-      <div className="board-row">
-        {[6, 7, 8].map(i => (
-          <Square
-            key={i}
-            value={squares[i]}
-            onSquareClick={() => handleClick(i)}
-            highlight={winningLine && winningLine.includes(i)}
-            draw={isDraw}
-          />
-        ))}
-      </div>
+      {[0, 3, 6].map(row => (
+        <div className="board-row" key={row}>
+          {[0, 1, 2].map(col => {
+            const i = row + col;
+            return (
+              <Square
+                key={i}
+                value={squares[i]}
+                onSquareClick={() => handleClick(i)}
+                highlight={winningLine?.includes(i)}
+                draw={isDraw}
+              />
+            );
+          })}
+        </div>
+      ))}
     </>
   );
 }
@@ -78,73 +59,146 @@ export default function Game() {
   const [currentMove, setCurrentMove] = useState(0);
   const [xScore, setXScore] = useState(0);
   const [oScore, setOScore] = useState(0);
-  const [movesLog, setMovesLog] = useState([]);
+  const [isAscending, setIsAscending] = useState(true);
 
-  const currentSquares = history[currentMove];
+  // Nouvel état pour gérer l'affichage des sections
+  const [showGame, setShowGame] = useState(false);
+
   const xIsNext = currentMove % 2 === 0;
+  const currentSquares = history[currentMove];
 
-  function handlePlay(nextSquares, index) {
-    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
-    setHistory(nextHistory);
-    setCurrentMove(nextHistory.length - 1);
-
-    const player = xIsNext ? 'X' : 'O';
-    setMovesLog(prev => [...prev, `${prev.length + 1}. Coup ${player}`]);
+  function handlePlay(nextSquares, i) {
+    const newHistory = [...history.slice(0, currentMove + 1), nextSquares];
+    setHistory(newHistory);
+    setCurrentMove(newHistory.length - 1);
 
     const winnerLine = calculateWinner(nextSquares);
     if (winnerLine) {
       const winner = nextSquares[winnerLine[0]];
       if (winner === 'X') setXScore(prev => prev + 1);
-      else if (winner === 'O') setOScore(prev => prev + 1);
+      if (winner === 'O') setOScore(prev => prev + 1);
     }
   }
 
-  function restartGame() {
-    setCurrentMove(0);
-    setHistory([Array(9).fill(null)]);
-    setMovesLog([]);
+  function jumpTo(move) {
+    setCurrentMove(move);
   }
 
+  const moves = history.map((squares, move) => {
+    if (move === currentMove) {
+      return (
+        <li key={move}>
+          <p>Vous êtes au coup #{move}</p>
+        </li>
+      );
+    }
+
+    const desc = move ? `Aller au coup #${move}` : 'Revenir au début';
+    return (
+      <li key={move}>
+        <button onClick={() => jumpTo(move)}>{desc}</button>
+      </li>
+    );
+  });
+
+  const orderedMoves = isAscending ? moves : [...moves].reverse();
+
+  // ---------- STRUCTURE AVEC 2 SECTIONS ----------
+
+  if (!showGame) {
+    // Écran d'accueil / règles + titre
+    return (
+      <>
+        <nav className="navbar">
+          <ul>
+            <li><a href="#rules">Règles</a></li>
+            <li><a href="#game">Jeu</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+
+        <section className="intro-section">
+          <h1 className="game-title">TIC-TAC-TOE</h1>
+
+          <section className="rules-section" id="rules">
+            <h2>Règles du jeu</h2>
+            <ul>
+              <li>Deux joueurs : X et O.</li>
+              <li>Ils jouent à tour de rôle sur une grille 3x3.</li>
+              <li>Le premier qui aligne 3 symboles identiques (horizontalement, verticalement ou en diagonale) gagne.</li>
+              <li>Si toutes les cases sont remplies sans gagnant, c'est un match nul.</li>
+            </ul>
+          </section>
+
+          <button
+            className="start-game-btn"
+            onClick={() => setShowGame(true)}
+            aria-label="Commencer le jeu"
+          >
+            Commencer à jouer
+          </button>
+        </section>
+
+        <footer className="footer" id="contact">
+          <p><strong>TIC-TAC-TOE - 2025</strong></p>
+          <p>Développé par X</p>
+          <p>Contact :<br />GitHub 1<br />GitHub 2</p>
+        </footer>
+      </>
+    );
+  }
+
+  // Affichage du jeu
   return (
     <>
-      <div className="game">
-        <div className="status">
-          {calculateWinner(currentSquares)
-            ? currentSquares[calculateWinner(currentSquares)[0]] + ' a gagné'
-            : !currentSquares.includes(null)
-              ? 'Match nul !'
-              : 'Prochain tour : ' + (xIsNext ? 'X' : 'O')}
-        </div>
+      <nav className="navbar">
+        <ul>
+          <li><a href="#rules">Règles</a></li>
+          <li><a href="#game">Jeu</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
 
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div className="game-container" id="game">
+        <div className="game-layout">
           <div className="game-board">
             <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+            <button
+              id="restart-btn"
+              onClick={() => {
+                setHistory([Array(9).fill(null)]);
+                setCurrentMove(0);
+              }}
+            >
+              Restart
+            </button>
           </div>
 
-          <div className="score-buttons">
-            <button>X : {xScore}</button>
-            <button>O : {oScore}</button>
+          <div className="score-center">
+            <div className="score">
+              <p>Score X : {xScore}</p>
+              <p>Score O : {oScore}</p>
+            </div>
           </div>
 
-          <div className="notes">
-            <ul>
-              {movesLog.map((coup, idx) => (
-                <li key={idx}>{coup}</li>
-              ))}
-            </ul>
+          <div className="game-info">
+            <button
+              onClick={() => setIsAscending(!isAscending)}
+              title="Trier l'historique"
+              aria-label="Trier l'historique"
+            >
+              {isAscending ? '🔽' : '🔼'}
+            </button>
+            <ol>{orderedMoves}</ol>
           </div>
-        </div>
-
-        <div className="game-restart">
-          <button id="restart-btn" onClick={restartGame}>Restart</button>
         </div>
       </div>
 
-      <div className="footer">
+      <footer className="footer" id="contact">
         <p><strong>TIC-TAC-TOE - 2025</strong></p>
-        <p>Développé par X</p>
+        <p>Développé par Ichem / Ludo / Nico / Rémi / Théo / Calypso / Anne-Marie</p>
         <p>Contact :<br />GitHub 1<br />GitHub 2</p>
-      </div>
+      </footer>
     </>
   );
 }
@@ -155,10 +209,9 @@ function calculateWinner(squares) {
     [0, 3, 6], [1, 4, 7], [2, 5, 8],
     [0, 4, 8], [2, 4, 6],
   ];
-  for (const line of lines) {
-    const [a, b, c] = line;
+  for (const [a, b, c] of lines) {
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return line;
+      return [a, b, c];
     }
   }
   return null;
