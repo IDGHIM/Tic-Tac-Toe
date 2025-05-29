@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import './styles.css';
 
-function Square({ value, onSquareClick, highlight }) {
+function Square({ value, onSquareClick, highlight, draw }) {
   return (
     <button
-      className={`square ${highlight ? 'highlight' : ''}`}
+      className={`square ${highlight ? 'highlight' : ''} ${draw ? 'draw' : ''}`}
       onClick={onSquareClick}
     >
       {value}
@@ -23,9 +23,15 @@ function Board({ xIsNext, squares, onPlay }) {
 
   const winningLine = calculateWinner(squares);
   const winner = winningLine ? squares[winningLine[0]] : null;
+
+  // Détecter match nul : pas de gagnant et toutes les cases remplies
+  const isDraw = !winner && squares.every(square => square !== null);
+
   const status = winner
     ? `${winner} a gagné`
-    : `Prochain tour : ${xIsNext ? 'X' : 'O'}`;
+    : isDraw
+      ? "Match nul !"
+      : `Prochain tour : ${xIsNext ? 'X' : 'O'}`;
 
   return (
     <>
@@ -37,6 +43,7 @@ function Board({ xIsNext, squares, onPlay }) {
             value={squares[i]}
             onSquareClick={() => handleClick(i)}
             highlight={winningLine && winningLine.includes(i)}
+            draw={isDraw}
           />
         ))}
       </div>
@@ -47,6 +54,7 @@ function Board({ xIsNext, squares, onPlay }) {
             value={squares[i]}
             onSquareClick={() => handleClick(i)}
             highlight={winningLine && winningLine.includes(i)}
+            draw={isDraw}
           />
         ))}
       </div>
@@ -57,6 +65,7 @@ function Board({ xIsNext, squares, onPlay }) {
             value={squares[i]}
             onSquareClick={() => handleClick(i)}
             highlight={winningLine && winningLine.includes(i)}
+            draw={isDraw}
           />
         ))}
       </div>
@@ -102,7 +111,9 @@ export default function Game() {
         <div className="status">
           {calculateWinner(currentSquares)
             ? currentSquares[calculateWinner(currentSquares)[0]] + ' a gagné'
-            : 'Prochain tour : ' + (xIsNext ? 'X' : 'O')}
+            : !currentSquares.includes(null)
+              ? 'Match nul !'
+              : 'Prochain tour : ' + (xIsNext ? 'X' : 'O')}
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center' }}>

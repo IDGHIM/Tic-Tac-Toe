@@ -42,11 +42,16 @@ body {
 }
 
 .square.highlight {
-  background-color: #ffff00; /* fond jaune vif */
+  background-color: #ffff00; /* jaune vif */
   border-color: #fbc02d;
   font-weight: bold;
 }
 
+.square.draw {
+  background-color: #ccc; /* gris clair */
+  cursor: default;
+  color: #666;
+}
 
 .score-buttons {
   margin-left: 2rem;
