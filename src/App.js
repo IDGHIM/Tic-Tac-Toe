@@ -1,12 +1,15 @@
 import { useState } from 'react';
+import "./styles.css";
 
-function Square({ value, onSquareClick }) {
+function Square({ value, onSquareClick }) {}
   return (
-    <button className="square" onClick={onSquareClick}>
+    <button
+      className={`square ${isWinning ? "winning" : ""}`}
+      onClick={onSquareClick}
+    >
       {value}
     </button>
   );
-}
 
 function Board({ xIsNext, squares, onPlay }) {
   function handleClick(i) {
