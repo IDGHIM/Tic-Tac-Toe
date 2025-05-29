@@ -36,33 +36,43 @@ function Board({ xIsNext, squares, onPlay }) {
     status = `Prochain tour : ${xIsNext ? 'X' : 'O'}`;
   }
 
-  return (
-    <>
-      <div className="status">{status}</div>
-      <div className={`board ${isDraw ? 'draw' : ''}`}>
-        {[0, 1, 2].map(row => (
-          <div className="board-row" key={row}>
-            {[0, 1, 2].map(col => {
-              const index = row * 3 + col;
-              return (
-                <Square
-                  key={index}
-                  value={squares[index]}
-                  onSquareClick={() => handleClick(index)}
-                  isWinning={winningLine.includes(index)}
-                />
-              );
-            })}
-          </div>
-        ))}
+  const rows = 3;
+  const cols = 3;
+  const boardRows = [];
+
+  for (let rowIndex = 0; rowIndex < rows; rowIndex++) {
+    const rowSquares = [];
+    for (let colIndex = 0; colIndex < cols; colIndex++) {
+      const index = rowIndex * cols + colIndex;
+      rowSquares.push(
+        <Square
+          key={index}
+          value={squares[index]}
+          onSquareClick={() => handleClick(index)}
+          isWinning={winningLine.includes(index)}
+        />
+      );
+    }
+    boardRows.push(
+      <div className="board-row" key={rowIndex}>
+        {rowSquares}
       </div>
-    </>
+    );
+  }
+
+  return (
+    <div className={`board ${isDraw ? 'draw' : ''}`}>
+      <div className="status">{status}</div>
+      {boardRows}
+    </div>
   );
 }
 
 export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
+  const [xMoves, setXMoves] = useState(0);
+  const [oMoves, setOMoves] = useState(0);
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
 
@@ -70,13 +80,14 @@ export default function Game() {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
+    xIsNext ? setXMoves(xMoves + 1) : setOMoves(oMoves + 1);
   }
 
-  function jumpTo(nextMove) {
-    setCurrentMove(nextMove);
+  function jumpTo(move) {
+    setCurrentMove(move);
   }
 
-  const moves = history.map((squares, move) => {
+  const moves = history.map((_, move) => {
     const description = move ? `Aller au coup #${move}` : 'Revenir au début';
     return (
       <li key={move}>
@@ -93,6 +104,10 @@ export default function Game() {
       <div className="game-info">
         <ol>{moves}</ol>
       </div>
+      <div className="game-stats">
+        <p>Coups X : {xMoves}</p>
+        <p>Coups O : {oMoves}</p>
+      </div>
     </div>
   );
 }
@@ -108,8 +123,7 @@ function calculateWinner(squares) {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
+  for (const [a, b, c] of lines) {
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
       return {
         winner: squares[a],
