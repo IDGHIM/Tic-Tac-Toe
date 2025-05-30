@@ -216,13 +216,36 @@ a:hover {
   box-shadow: inset 0 1px 4px rgba(255, 255, 255, 0.2);
   margin-top: 40px;
   border-radius: 12px 12px 0 0;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  user-select: none;
 }
 
 .footer strong {
   font-size: 18px;
+  display: block;
+  margin-bottom: 8px;
 }
 
 .footer p {
   margin: 4px 0;
   line-height: 1.4;
 }
+
+.footer a {
+  color: #ffd54f; /* jaune clair, contraste bien sur le bleu */
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.footer a:hover,
+.footer a:focus {
+  color: #fff176; /* jaune plus clair au hover */
+  text-decoration: underline;
+  outline: none;
+}
+
+/* Pour rendre les liens un peu plus espacés */
+.footer p a + a {
+  margin-left: 15px;
+}
+

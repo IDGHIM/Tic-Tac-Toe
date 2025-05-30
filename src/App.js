@@ -198,8 +198,16 @@ export default function Game() {
       {/* ---------- Pied de page ---------- */}
       <footer className="footer" id="contact">
         <p><strong>TIC-TAC-TOE - 2025</strong></p>
-        <p>Développé par X</p>
-        <p>Contact :<br />GitHub 1<br />GitHub 2</p>
+        <p>Développé par Ichem / Ludo / Théo / Rémi / Nico / Calpyso / Anne-Marie</p>
+        <p>Contact :<br />
+          <a href="https://github.com/IDGHIM" target="_blank" rel="noopener noreferrer">GitHub Ichem</a><br />
+          <a href="https://github.com/lfourage" target="_blank" rel="noopener noreferrer">GitHub Ludo</a><br />
+          <a href="https://github.com/Snoobydoo" target="_blank" rel="noopener noreferrer">GitHub Théo</a><br />
+          <a href="https://github.com/Kroxii" target="_blank" rel="noopener noreferrer">GitHub Rémi</a><br />
+          <a href="https://github.com/nicolas-drew" target="_blank" rel="noopener noreferrer">GitHub Nico</a><br />
+          <a href="https://github.com/calypsohebrard" target="_blank" rel="noopener noreferrer">GitHub Calypso</a><br />
+          <a href="https://github.com/4749-am" target="_blank" rel="noopener noreferrer">GitHub Anne-Marie</a><br />
+        </p>
       </footer>
     </>
   );
