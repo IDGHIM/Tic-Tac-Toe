@@ -8,12 +8,10 @@ import './styles.css';
 function Square({ value, onSquareClick, highlight, draw }) {
   return (
     <button
-      // Application conditionnelle de classes CSS si la case est dans une ligne gagnante (highlight)
-      // ou s'il y a égalité (draw)
       className={`square ${highlight ? 'highlight' : ''} ${draw ? 'draw' : ''}`}
-      onClick={onSquareClick} // Appel de la fonction lors d’un clic sur la case
+      onClick={onSquareClick}
     >
-      {value} {/* Affiche "X", "O" ou rien */}
+      {value}
     </button>
   );
 }
@@ -21,27 +19,25 @@ function Square({ value, onSquareClick, highlight, draw }) {
 
 // ---------------------- Composant Plateau ----------------------
 function Board({ xIsNext, squares, onPlay }) {
-  // Gère le clic sur une case
+  // Gestion du clic sur une case
   function handleClick(i) {
-    // Ignore le clic si la partie est déjà gagnée ou si la case est remplie
+    // Empêche le clic si un gagnant existe ou si la case est déjà remplie
     if (calculateWinner(squares) || squares[i]) return;
 
-    // Crée une nouvelle copie du plateau
+    // Copie du tableau des cases pour mise à jour
     const nextSquares = squares.slice();
-    // Assigne 'X' ou 'O' à la case cliquée
     nextSquares[i] = xIsNext ? 'X' : 'O';
-    // Appelle la fonction du composant parent avec le nouveau plateau
     onPlay(nextSquares, i);
   }
 
-  // Vérifie si une ligne gagnante existe
+  // Détecte la ligne gagnante (indices des cases)
   const winningLine = calculateWinner(squares);
-  // Récupère le symbole gagnant à partir de la ligne gagnante
+  // Détermine le gagnant s'il y en a un
   const winner = winningLine ? squares[winningLine[0]] : null;
-  // Vérifie si toutes les cases sont remplies sans gagnant
+  // Vérifie s'il y a match nul (toutes les cases remplies sans gagnant)
   const isDraw = !winner && squares.every(square => square !== null);
 
-  // Détermine le message de statut
+  // Message de statut selon situation
   const status = winner
     ? `${winner} a gagné`
     : isDraw
@@ -50,22 +46,20 @@ function Board({ xIsNext, squares, onPlay }) {
 
   return (
     <>
-      {/* Affichage du statut du jeu */}
       <div className="status">{status}</div>
 
-      {/* Génère les 3 lignes du plateau */}
+      {/* Création des lignes et colonnes du plateau */}
       {[0, 3, 6].map(row => (
         <div className="board-row" key={row}>
-          {/* Génère 3 cases par ligne */}
           {[0, 1, 2].map(col => {
             const i = row + col;
             return (
               <Square
                 key={i}
-                value={squares[i]} // Affiche X, O ou vide
-                onSquareClick={() => handleClick(i)} // Gère le clic
-                highlight={winningLine?.includes(i)} // Met en surbrillance si la case fait partie de la ligne gagnante
-                draw={isDraw} // Met en surbrillance si match nul
+                value={squares[i]}
+                onSquareClick={() => handleClick(i)}
+                highlight={winningLine?.includes(i)}
+                draw={isDraw}
               />
             );
           })}
@@ -78,30 +72,29 @@ function Board({ xIsNext, squares, onPlay }) {
 
 // ---------------------- Composant Principal ----------------------
 export default function Game() {
-  // État : historique des plateaux
+  // Historique des états du plateau
   const [history, setHistory] = useState([Array(9).fill(null)]);
-  // État : index du coup actuel dans l'historique
+  // Coup actuel dans l'historique
   const [currentMove, setCurrentMove] = useState(0);
-  // État : score du joueur X
+  // Scores des joueurs X et O
   const [xScore, setXScore] = useState(0);
-  // État : score du joueur O
   const [oScore, setOScore] = useState(0);
-  // État : ordre de tri de l'historique
+  // Ordre d'affichage de l'historique (ascendant ou descendant)
   const [isAscending, setIsAscending] = useState(true);
 
-  // Détermine le joueur actif (X commence)
+  // Détermine quel joueur doit jouer (X si pair, O sinon)
   const xIsNext = currentMove % 2 === 0;
-  // Plateau actuel selon l’historique
+  // Plateau à l'état actuel
   const currentSquares = history[currentMove];
 
-  // Gère un nouveau coup joué
+  // Gestion d'un nouveau coup joué
   function handlePlay(nextSquares, i) {
-    // Met à jour l’historique en supprimant les coups après le courant
+    // Mise à jour de l'historique jusqu'au coup actuel + ajout du nouveau coup
     const newHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(newHistory);
     setCurrentMove(newHistory.length - 1);
 
-    // Vérifie s’il y a un gagnant et met à jour les scores
+    // Si on détecte un gagnant, on incrémente le score correspondant
     const winnerLine = calculateWinner(nextSquares);
     if (winnerLine) {
       const winner = nextSquares[winnerLine[0]];
@@ -110,12 +103,12 @@ export default function Game() {
     }
   }
 
-  // Permet de naviguer dans l’historique des coups
+  // Fonction pour revenir à un coup précédent
   function jumpTo(move) {
     setCurrentMove(move);
   }
 
-  // Génère la liste des mouvements
+  // Création de la liste des coups joués (non cliquables)
   const moves = history.map((squares, move) => {
     if (move === currentMove) {
       return (
@@ -127,12 +120,12 @@ export default function Game() {
     const desc = move ? `Aller au coup #${move}` : 'Revenir au début';
     return (
       <li key={move}>
-        <button onClick={() => jumpTo(move)}>{desc}</button>
+        <p>{desc}</p> {/* Texte non cliquable */}
       </li>
     );
   });
 
-  // Trie l’historique selon l’ordre sélectionné
+  // Trie les coups selon l'ordre choisi (ascendant ou descendant)
   const orderedMoves = isAscending ? moves : [...moves].reverse();
 
   return (
@@ -163,28 +156,33 @@ export default function Game() {
           {/* Plateau de jeu */}
           <div className="game-board">
             <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
-            <button
-              id="restart-btn"
-              onClick={() => {
-                // Réinitialise le plateau mais garde les scores
-                setHistory([Array(9).fill(null)]);
-                setCurrentMove(0);
-              }}
-            >
-              Restart
-            </button>
-          </div>
 
-          {/* Affichage des scores */}
-          <div className="score-center">
-            <div className="score">
-              <p>Score X : {xScore}</p>
-              <p>Score O : {oScore}</p>
+            {/* Conteneur flex pour aligner bouton Restart et score côte à côte */}
+            <div className="controls-container">
+              {/* Bouton restart pour réinitialiser le jeu */}
+              <button
+                id="restart-btn"
+                onClick={() => {
+                  setHistory([Array(9).fill(null)]);
+                  setCurrentMove(0);
+                }}
+              >
+                Restart
+              </button>
+
+              {/* Affichage du score des joueurs */}
+              <div className="score-center">
+                <div className="score">
+                  <p>Score X : {xScore}</p>
+                  <p>Score O : {oScore}</p>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Historique des coups */}
+          {/* Historique des coups (non interactif) */}
           <div className="game-info">
+            {/* Bouton pour inverser l'ordre de l'historique */}
             <button
               onClick={() => setIsAscending(!isAscending)}
               title="Trier l'historique"
@@ -208,21 +206,21 @@ export default function Game() {
 }
 
 
-// ---------------------- Fonction utilitaire pour détecter un gagnant ----------------------
+// ---------------------- Fonction de détection du gagnant ----------------------
 function calculateWinner(squares) {
-  // Liste des combinaisons gagnantes possibles (lignes, colonnes, diagonales)
+  // Toutes les combinaisons gagnantes possibles
   const lines = [
-    [0, 1, 2], [3, 4, 5], [6, 7, 8], // Lignes horizontales
-    [0, 3, 6], [1, 4, 7], [2, 5, 8], // Colonnes verticales
-    [0, 4, 8], [2, 4, 6],            // Diagonales
+    [0, 1, 2], [3, 4, 5], [6, 7, 8], // lignes horizontales
+    [0, 3, 6], [1, 4, 7], [2, 5, 8], // colonnes verticales
+    [0, 4, 8], [2, 4, 6],            // diagonales
   ];
 
-  // Vérifie si une combinaison gagnante est remplie par un même symbole
+  // Vérifie chaque combinaison pour un gagnant
   for (const [a, b, c] of lines) {
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return [a, b, c]; // Retourne les indices de la ligne gagnante
+      return [a, b, c]; // Retourne la ligne gagnante
     }
   }
 
-  return null; // Pas de gagnant
+  return null; // Pas de gagnant trouvé
 }
