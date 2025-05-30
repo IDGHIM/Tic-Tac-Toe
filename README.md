@@ -55,9 +55,9 @@ Il m’a permis d’améliorer mes compétences en :
 
 ## 📫 Me contacter
 
-- GitHub: [@idghim](https://github.com/idghim)  
-- freeCodeCamp: [My Profile](https://www.freecodecamp.org/IchemD)
-- Mail : [Email](ichemdghim@gmail.com)
+- GitHub: [@idghim](https://github.com/idghim) [@X](https://github.com/x) [@X](https://github.com/x) [@X](https://github.com/x) [@X](https://github.com/x) [@X](https://github.com/x) [@X](https://github.com/x)   
+- freeCodeCamp: [Ichem](https://www.freecodecamp.org/IchemD) [X](https://www.freecodecamp.org/X) [X](https://www.freecodecamp.org/X) [X](https://www.freecodecamp.org/X) [X](https://www.freecodecamp.org/X) [X](https://www.freecodecamp.org/X) [X](https://www.freecodecamp.org/X)
+- Mail : [Ichem mail](ichemdghim@gmail.com) [X mail](X@gmail.com) [X mail](X@gmail.com) [X mail](X@gmail.com) [X mail](X@gmail.com) [X mail](X@gmail.com) [X mail](X@gmail.com)
 
 ---
 
