@@ -198,15 +198,15 @@ export default function Game() {
       {/* ---------- Pied de page ---------- */}
       <footer className="footer" id="contact">
         <p><strong>TIC-TAC-TOE - 2025</strong></p>
-        <p>Développé par Ichem / Ludo / Théo / Rémi / Nico / Calpyso / Anne-Marie</p>
-        <p>Contact :<br />
-          <a href="https://github.com/IDGHIM" target="_blank" rel="noopener noreferrer">GitHub Ichem</a><br />
-          <a href="https://github.com/lfourage" target="_blank" rel="noopener noreferrer">GitHub Ludo</a><br />
-          <a href="https://github.com/Snoobydoo" target="_blank" rel="noopener noreferrer">GitHub Théo</a><br />
-          <a href="https://github.com/Kroxii" target="_blank" rel="noopener noreferrer">GitHub Rémi</a><br />
-          <a href="https://github.com/nicolas-drew" target="_blank" rel="noopener noreferrer">GitHub Nico</a><br />
-          <a href="https://github.com/calypsohebrard" target="_blank" rel="noopener noreferrer">GitHub Calypso</a><br />
-          <a href="https://github.com/4749-am" target="_blank" rel="noopener noreferrer">GitHub Anne-Marie</a><br />
+        <p>
+        Développé par{' '}{' '}
+        <a href="https://github.com/IDGHIM" target="_blank" rel="noopener noreferrer">Ichem</a> 
+        <a href="https://github.com/lfourage" target="_blank" rel="noopener noreferrer">Ludo</a> 
+        <a href="https://github.com/Snoobydoo" target="_blank" rel="noopener noreferrer">Théo</a> 
+        <a href="https://github.com/Kroxii" target="_blank" rel="noopener noreferrer">Rémi</a> 
+        <a href="https://github.com/nicolas-drew" target="_blank" rel="noopener noreferrer">Nico</a> 
+        <a href="https://github.com/calypsohebrard" target="_blank" rel="noopener noreferrer">Calpyso</a> 
+        <a href="https://github.com/4749-am" target="_blank" rel="noopener noreferrer">Anne-Marie</a>
         </p>
       </footer>
     </>
