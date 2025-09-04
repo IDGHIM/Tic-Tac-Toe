@@ -1,6 +1,6 @@
 # Tic-Tac-Toe
 
-🔗 **Site en ligne** : [https://tictactoe-neon-alpha.vercel.app/](https://tictactoe-neon-alpha.vercel.app/)
+🔗 **Site en ligne** : [https://tic-tac-toe-rosy-eta.vercel.app/](https://tic-tac-toe-rosy-eta.vercel.app/)
 
 > ✨ *Sur ce site, j’ai apporté quelques modifications aux instructions d’origine afin d’obtenir un résultat qui me plaît personnellement et qui correspond à mon style.*
 
